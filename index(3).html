@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Павел Беляков — Video Editor & Motion Designer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0e0e;
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.55);
+      --card-radius: 16px;
+      --transition: 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 28px 32px 40px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .header-left {}
+
+    .roles {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .roles .dot {
+      width: 5px;
+      height: 5px;
+      background: var(--muted);
+      border-radius: 50%;
+    }
+
+    h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .tagline {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .tagline em {
+      font-style: normal;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .contact-label {
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .icon-btn:hover {
+      border-color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ── GRID ── */
+    .grid-top {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .grid-bottom {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      position: relative;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      cursor: pointer;
+      transform: scale(1) translateZ(0);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+      transition:
+        transform var(--transition),
+        box-shadow var(--transition);
+      will-change: transform, box-shadow;
+    }
+
+    .grid-top .card { height: 340px; }
+    .grid-bottom .card { height: 250px; }
+
+    .card:hover {
+      transform: scale(1.04) translateZ(0);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.75), 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    .card-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition);
+    }
+
+    .card:hover .card-img {
+      transform: scale(1.02);
+    }
+
+    /* gradient overlay */
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.82) 0%,
+        rgba(0,0,0,0.35) 45%,
+        transparent 100%
+      );
+      pointer-events: none;
+    }
+
+    .card-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 22px;
+      z-index: 2;
+    }
+
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(22px, 2.2vw, 32px);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 5px;
+      transition: transform var(--transition);
+      display: block;
+    }
+
+    .card:hover .card-title {
+      transform: translateY(-4px);
+    }
+
+    .card-sub {
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.4;
+      transition: transform var(--transition);
+    }
+
+    .card-link {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      border-radius: var(--card-radius);
+    }
+
+    .card-link:focus-visible {
+      outline: 2px solid rgba(255,255,255,0.7);
+      outline-offset: -3px;
+    }
+
+    .card:hover .card-sub {
+      transform: translateY(-4px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── PLACEHOLDER COLORS for cards without real images ── */
+    .card-commercial  { background: #2a1f0f; }
+    .card-social      { background: #1a1020; }
+    .card-food        { background: #101a10; }
+    .card-event       { background: #10182a; }
+    .card-tutorials   { background: #1a1510; }
+    .card-ai          { background: #101520; }
+    .card-motion      { background: #1a1020; }
+
+    @media (max-width: 900px) {
+      .grid-top    { grid-template-columns: repeat(2, 1fr); }
+      .grid-bottom { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 16px; }
+      .grid-top, .grid-bottom { grid-template-columns: 1fr; }
+      .header-right { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-left">
+    <div class="roles">
+      <span>Video Editor</span>
+      <span class="dot"></span>
+      <span>Motion Designer</span>
+      <span class="dot"></span>
+      <span>AI Creator</span>
+    </div>
+    <h1>Павел Беляков</h1>
+    <p class="tagline">Создаю видео, которые <em>вовлекают</em>, <em>продают</em> и <em>запоминаются</em></p>
+  </div>
+
+  <div class="header-right">
+    <span class="contact-label">Связаться со мной</span>
+    <!-- Telegram -->
+    <a class="icon-btn" href="https://t.me/NoSinkI" aria-label="Telegram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 3L3 10.5l6.5 2L17 7l-5.5 7.5 6.5 4L21 3z"/>
+      </svg>
+    </a>
+    <!-- Instagram -->
+    <a class="icon-btn" href="https://www.instagram.com/lumperix1528" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="5"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+    <!-- Email -->
+    <a class="icon-btn" href="qd-13@mail.ru" aria-label="Email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="M2 7l10 7 10-7"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<!-- ── TOP ROW ── -->
+<div class="grid-top">
+
+  <!-- COMMERCIAL -->
+  <div class="card card-commercial">
+    <a class="card-link" href="https://drive.google.com/drive/folders/1pmghH-IGvyOEw_A8JDjo8ZgYm2KfXsi8?usp=sharing" aria-label="Commercial — Реклама и промо"></a>
+    <img class="card-img" src="https://psv4.userapi.com/s/v1/d2/kXr_KN519FVTRySsTcBfqYRkvqPbRdem5zmY4bkwOSSw30B2M-LX_KYYFYXsQN0B8z3A1ZQJ4jnRzCr49bdJXEjGUNOd4SBerIXk_GnUJVUeuOQGEZ09TXTLUcfidl-3AmKDPIJreso9/Dopolni_verkh_i_niz_izobrazhenia_202606281349.jpg" alt="Commercial" />
+    <div class="card-body">
+      <span class="card-title">Commercial</span>
+      <div class="card-sub">Реклама и промо</div>
+    </div>
+  </div>
+
+  <!-- SOCIAL CONTENT -->
+  <div class="card card-social">
+    <a class="card-link" href="https://drive.google.com/drive/folders/1-8XT_0t3ZAaKzb3p6ikCq3l4jPGDWBOE?usp=sharing" aria-label="Social Content — Рилсы, шортсы, разговорные видео"></a>
+    <img class="card-img" src="https://psv4.userapi.com/s/v1/d2/KDyIM2tAu7VEWG00Yh650ttlsHe5hsTspjnVSaQWKqovvSD51RrPW3uVICphZx3eTqW34uMNdprbla0oIB_vbvX0--G0JTNJKe8RzSeVTozYokeVe7TmUMqZcqlGBoLtYhnAtBAzPTDg/Coffee_cold_brew_vert_00_00_26_05_Still003.png" alt="Social Content" />
+    <div class="card-body">
+      <span class="card-title">Social Content</span>
+      <div class="card-sub">Рилсы, шортсы,<br>разговорные видео</div>
+    </div>
+  </div>
+
+  <!-- FOOD CONTENT -->
+  <div class="card card-food">
+    <a class="card-link" href="https://drive.google.com/drive/folders/1wedM_yzYPxYK6sWxgUr9toDh31eIsYqP?usp=sharing" aria-label="Food Content — Еда, рецепты, фуд-контент"></a>
+    <img class="card-img" src="https://psv4.userapi.com/s/v1/d2/au1uY_LkB5lzkAJS36ZmLW5ne71oUgyTA_iw_LckrKuTi38SfIQOlMWFZO_gd03D6gx-_77d_clCCMTgsb7-t5ZQq0FGDJSD2WwJwIsq5Jw5c-f5zzIhQjDcNiNFIJzuam1XbkD7thsE/Coffee_cold_brew_vert_00_00_01_07_Still004.png" alt="Food Content" />
+    <div class="card-body">
+      <span class="card-title">Food Content</span>
+      <div class="card-sub">Еда, рецепты,<br>фуд-контент</div>
+    </div>
+  </div>
+
+  <!-- EVENT COVERAGE -->
+  <div class="card card-event">
+    <a class="card-link" href="https://drive.google.com/drive/folders/1wst4CQjpiwSA2yTOICY2lFDOHv5bp0Iv?usp=sharing" aria-label="Event Coverage — Мероприятия, репортажи, отчётные видео"></a>
+    <img class="card-img" src="https://psv4.userapi.com/s/v1/d2/_vJwsoeDp1xkYpRYJ0PKvmcl1vHDt2WCQnlK6Vt-tCIr5fZSNF7SEenuJwYbUG_QTDqjNMpnO8whd0fK_tWY3FWA-zKhEnvpy8G_1UeBOMhmXdSlpyNLKxQKSji-cNr03DrjR2gntdkU/Dopolni_verkh_i_niz_izobrazhenia_202606262344.jpg" alt="Event Coverage" />
+    <div class="card-body">
+      <span class="card-title">Event Coverage</span>
+      <div class="card-sub">Мероприятия, репортажи,<br>отчётные видео</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── BOTTOM ROW ── -->
+<div class="grid-bottom">
+
+  <!-- TUTORIALS -->
+  <div class="card card-tutorials">
+    <a class="card-link" href="https://drive.google.com/drive/folders/1_oV5rYB0okZnB4BgXVDFPNw9bTmeDr1t?usp=sharing" aria-label="Tutorials — Инструкции, обучение, обзоры техники"></a>
+    <img class="card-img" src="https://psv4.userapi.com/s/v1/d2/QcZ5uEI3wM0x_94gNyIbuyMGzKaMCUOLKzZuC537QYWaOYpnKaCK4oW43ymWg75ROj6XxmBupto7cYWHe0sHRzYnCQPUuiMQrTPUZaLTvs3SjSL6_zubpV-ZcTD4mDz4oj8kCs_0S02Q/Ochisti_kadr_ot_infografiki_kromen_202606262348.jpg" alt="Tutorials" />
+    <div class="card-body">
+      <span class="card-title">Tutorials</span>
+      <div class="card-sub">Инструкции, обучение,<br>обзоры техники</div>
+    </div>
+  </div>
+
+  <!-- AI PRODUCTION -->
+  <div class="card card-ai">
+    <a class="card-link" href="https://drive.google.com/drive/folders/1Dc6DXyFtDHojuQ9UDsAQBJn9Da1Be78X?usp=sharing" aria-label="AI Production — AI видео, гибридные проекты"></a>
+    <img class="card-img" src="https://psv4.userapi.com/s/v1/d2/328jYvHU92078A4iW6VynhLghgD-zyA0yQZA79cr_H2bOamW4mUF7r1D0vThz72IkQquxLQBPwyregvTpzyRmvaW_BuIR64GnfE0r2QwBW_Jwne0gNUSu3VXJ4_SXBZ5Dvey5Nll-RV5/Filtry.png" alt="AI Production" />
+    <div class="card-body">
+      <span class="card-title">AI Production</span>
+      <div class="card-sub">AI видео,<br>гибридные проекты</div>
+    </div>
+  </div>
+   
+  <!-- MOTION DESIGN -->
+  <div class="card card-motion">
+    <a class="card-link" href="https://drive.google.com/drive/folders/1wJdyMGdAIU-5wHMgEJJsUZTxnBVm16_D?usp=sharing" aria-label="Motion Design — Анимация, моушн-графика, титры, инфографика"></a>
+    <img class="card-img" src="https://psv4.userapi.com/s/v1/d2/j3b_xIJYFFr5sLjn0FQmgT_a5mxbwic3IWuDtt8quKtg_gHY61mZBxRbpfW-_YYDS6aKv7rIw_pTgxTHUgWehI0pcNjPuD4RTMZefADoGQcYQZqWJzU3wSiY7b6T6yyHiULEepVuYv96/Dopolni_izobrazhenie_do_formata_16_9_202606262345.jpg" alt="Motion Design" />
+    <div class="card-body">
+      <span class="card-title">Motion Design</span>
+      <div class="card-sub">Анимация, моушн-графика,<br>титры, инфографика</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>© 2026 Pablo Belly</footer>
+
+</body>
+</html>
